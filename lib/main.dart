@@ -1,4 +1,4 @@
-import 'package:device_preview/device_preview.dart'; // 👈 импорт
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/models/note_database.dart';
 import 'package:notes_app/pages/notes_page.dart';
@@ -11,7 +11,7 @@ void main() async {
 
   runApp(
     DevicePreview(
-      enabled: false, // 👈 выключится на релизе
+      enabled: false,
       builder: (context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => NoteDatabase()),
@@ -30,10 +30,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // ignore: deprecated_member_use
-      useInheritedMediaQuery: true, // 👈 чтобы DevicePreview работал корректно
-      locale: DevicePreview.locale(context), // 👈 локаль берётся из превью
-      builder: DevicePreview.appBuilder, // 👈 билдится через превью
+
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       home: const NotesPage(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );

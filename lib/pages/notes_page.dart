@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:notes_app/components/my_drawer.dart';
 import 'package:notes_app/components/note_tile.dart';
 import 'package:notes_app/models/note.dart';
 import 'package:notes_app/models/note_database.dart';
+import 'package:notes_app/pages/note_add_edit.dart';
 import 'package:provider/provider.dart';
 
 class NotesPage extends StatefulWidget {
@@ -89,7 +91,12 @@ class _NotesPageState extends State<NotesPage> {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.transparent),
       floatingActionButton: FloatingActionButton(
-        onPressed: createNote,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const NoteAddEdit()),
+          );
+        },
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         child: const Icon(Icons.add),
       ),
@@ -110,7 +117,7 @@ class _NotesPageState extends State<NotesPage> {
           ),
           Expanded(
             child: currentNotes.isEmpty
-                ? const Center(child: Text('No Notes'))
+                ? _emptyState()
                 : ListView.builder(
                     itemCount: currentNotes.length,
                     itemBuilder: (context, index) {
@@ -127,4 +134,17 @@ class _NotesPageState extends State<NotesPage> {
       ),
     );
   }
+}
+
+Widget _emptyState() {
+  return Column(
+    children: [
+      Lottie.asset('assets/animations/no_file_founded.json'),
+      const SizedBox(height: 20),
+      const Text(
+        'Create your first note !',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+      ),
+    ],
+  );
 }
